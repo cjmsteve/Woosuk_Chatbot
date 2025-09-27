@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI 챗봇</title>
+    <style>
+        /* CSS는 생략하고, 기본 레이아웃만 가정합니다. */
+        .chat-container { width: 400px; margin: 50px auto; border: 1px solid #ccc; padding: 10px; }
+        .chat-box { height: 300px; overflow-y: scroll; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; }
+        .message { margin-bottom: 8px; padding: 5px; border-radius: 5px; }
+        .user { text-align: right; background-color: #d1e7ff; }
+        .bot { text-align: left; background-color: #f8d7da; }
+    </style>
 </head>
 <body>
-
+    <div class="chat-container">
+        <h1>AI 챗봇 🤖</h1>
+        <div class="chat-box" id="chat-box">
+            </div>
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="메시지를 입력하세요" required style="width: 80%;">
+            <button type="submit">전송</button>
+        </form>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>

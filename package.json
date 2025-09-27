@@ -1,10 +1,28 @@
 {
-  "name": "Woosuk_Chatbot",
+  "name": "woosuk_chatbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "우석대 챗봇 어드벤처디자인 프로젝트",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjmsteve/Woosuk_Chatbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjmsteve/Woosuk_Chatbot/issues"
+  },
+  "homepage": "https://github.com/cjmsteve/Woosuk_Chatbot#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "openai": "^5.23.1"
+  }
 }
