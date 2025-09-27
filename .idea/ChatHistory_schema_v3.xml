@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ChatHistoryState">
-    <option name="chatSessions" value="{&quot;81be5eaf-0020-4b7a-92f0-626dac533306&quot;:{&quot;id&quot;:&quot;81be5eaf-0020-4b7a-92f0-626dac533306&quot;,&quot;name&quot;:&quot;Confusing Input and File Context&quot;,&quot;timestamp&quot;:1758519833784,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:[{&quot;type&quot;:&quot;text&quot;,&quot;text&quot;:&quot;\n\u003cadditional_data\u003e\nBelow are some potentially helpful/relevant pieces of information for figuring out to respond\n\u003ccurrent_file\u003e\n```javascript:index.js, lines\u003dALL(1-2)\nconsole.log(\u0027Happy developing ✨\u0027)\n\n```\n\u003c/current_file\u003e\n\u003c/additional_data\u003e\n\u003cuser_query\u003e\njhj\n\u003c/user_query\u003e&quot;}]}]}}" />
-  </component>
-</project>
