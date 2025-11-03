@@ -28,36 +28,6 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 });
 
-// 챗봇 API 엔드포인트
-/*app.post('/api/chat', async (req, res) => {
-    const { message, history } = req.body; // history를 받아 연속성 구현 (선택 사항)
-
-    if (!message) {
-        return res.status(400).json({ error: '메시지가 필요합니다.' });
-    }
-
-    try {
-        // 대화 연속성을 위한 메시지 배열 구성
-        const messages = [
-            { "role": "system", "content": "당신은 친절하고 도움이 되는 AI 챗봇입니다." },
-            ...(history || []), // 이전 대화 기록
-            { "role": "user", "content": message } // 현재 사용자 메시지
-        ];
-        
-        const completion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo", 
-            messages: messages,
-        });
-
-        const botResponse = completion.choices[0].message.content;
-        res.json({ response: botResponse });
-
-    } catch (error) {
-        console.error("OpenAI API 호출 중 오류 발생:", error);
-        res.status(500).json({ error: "서버에서 오류가 발생했습니다." });
-    }
-});*/
-
 app.post('/api/chat', async (req, res) => {
     const { message, history } = req.body;
     // ... (유효성 검사 코드 생략)
