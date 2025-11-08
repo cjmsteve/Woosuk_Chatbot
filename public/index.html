@@ -4,110 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우석 챗봇</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        #chat-container { width: 400px; background: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; }
-        #chat-box { height: 400px; padding: 15px; overflow-y: scroll; border-bottom: 1px solid #eee; }
-        .message { margin-bottom: 10px; padding: 8px 12px; border-radius: 15px; max-width: 80%; }
-        .user-message { background-color: #007bff; color: white; margin-left: auto; text-align: right; }
-        .bot-message { background-color: #e9ecef; color: #333; margin-right: auto; text-align: left; }
-        #input-area { display: flex; padding: 10px; }
-        #user-input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px 0 0 5px; font-size: 16px; }
-        #send-button { padding: 10px 15px; border: none; background-color: #28a745; color: white; cursor: pointer; border-radius: 0 5px 5px 0; transition: background-color 0.2s; }
-        #send-button:hover { background-color: #218838; }
-        #loading { display: none; text-align: center; color: #6c757d; padding: 10px; }
-    </style>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="chat-container">
-    <div id="chat-box">
-        <div class="message bot-message">하이! 저는 우석대 인공지능 도우미 "🤖우디봇"입니다. 무엇을 도와드릴까요?</div>
-    </div>
-    <div id="loading">...응답 대기 중...</div>
-    <div id="input-area">
-        <input type="text" id="user-input" placeholder="메시지를 입력하세요...">
-        <button id="send-button">전송</button>
-    </div>
-</div>
+    <main id="chat-container">
+ 
+        <header id="chat-header">
+          <span>우석 챗봇</span>
+        </header>
+       
+        <section id="chat-box">
+          <div class="message bot-message">
+            안녕하세요! 저는 우석대 인공지능 도우미 "🤖우디봇" 입니다. 무엇을 도와드릴까요?
+            <div class="message-buttons">
+              <button class="message-button">학사일정</button>
+              <button class="message-button">학식메뉴</button>
+              <button class="message-button">포털접속</button>
+              <button class="message-button">셔틀버스</button>
+              <button class="message-button">졸업</button>
+              <button class="message-button">등록금</button>
+            </div>
+          </div>
+        </section>
+       
+        <div id="loading">...응답 대기 중...</div>
+       
+        <section id="input-area">
+          <input type="text" id="user-input" placeholder="메시지를 입력하세요...">
+          <button id="send-button">➤</button>
+        </section>
+       
+      </main>
 
-<script>
-    const chatBox = document.getElementById('chat-box');
-    const userInput = document.getElementById('user-input');
-    const sendButton = document.getElementById('send-button');
-    const loadingIndicator = document.getElementById('loading');
-
-    // 백엔드 API 엔드포인트 (현재 서버와 같은 호스트, 3000번 포트)
-    const API_URL = '/api/chat';
-
-    // 메시지를 채팅 박스에 표시하는 함수
-    function displayMessage(content, sender) {
-        const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message', `${sender}-message`);
-        msgDiv.textContent = content;
-        chatBox.appendChild(msgDiv);
-        // 스크롤을 항상 맨 아래로 이동
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    // 메시지를 전송하는 비동기 함수
-    async function sendMessage() {
-        const message = userInput.value.trim();
-        if (message === '') return; // 빈 메시지는 전송하지 않음
-
-        // 1. 사용자 메시지 표시 및 입력창 초기화
-        displayMessage(message, 'user');
-        userInput.value = '';
-
-        // 로딩 표시기 활성화
-        loadingIndicator.style.display = 'block';
-        sendButton.disabled = true;
-
-        try {
-            // 2. Node.js 백엔드 API로 메시지 전송
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // 서버로 보낼 데이터를 JSON 문자열로 변환
-                body: JSON.stringify({ message: message }),
-            });
-
-            // 3. 응답 처리
-            if (!response.ok) {
-                throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            // 4. 챗봇 응답 표시
-            const botResponse = data.response;
-            displayMessage(botResponse, 'bot');
-
-        } catch (error) {
-            console.error('채팅 요청 중 오류 발생:', error);
-            displayMessage('죄송합니다. 서버와 통신하는 데 문제가 발생했습니다.', 'bot');
-        } finally {
-            // 5. 로딩 표시기 비활성화 및 버튼 활성화
-            loadingIndicator.style.display = 'none';
-            sendButton.disabled = false;
-            userInput.focus(); // 입력 포커스 복구
-        }
-    }
-
-    // 전송 버튼 클릭 이벤트 리스너
-    sendButton.addEventListener('click', sendMessage);
-
-    // Enter 키 누름 이벤트 리스너
-    userInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    // 페이지 로드 시 입력창에 포커스
-    userInput.focus();
-
-</script>
+<script src="script.js"></script>
+    
 </body>
 </html>
