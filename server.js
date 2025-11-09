@@ -3,7 +3,7 @@ const express = require('express');
 const { GoogleGenAI } = require('@google/genai');
 const cors = require('cors');
 const path = require('path');
-const { text } = require('stream/consumers');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 5000;
