@@ -20,9 +20,8 @@ function displayMessage(content, sender) {
 }
 
 // 메시지를 전송하는 비동기 함수 (수정 없음 - 버튼/입력 모두 처리)
-async function sendMessage(bottonMessage=null) {
-    // 1. 사용자 입력 가져오기
-    const message = userInput.value.trim();
+async function sendMessage(buttonMessage=null) {
+    const message = buttonMessage ? buttonMessage : userInput.value.trim();
     if (message === '') return; // 빈 메시지는 전송하지 않음
 
     // 2. 사용자 메시지 표시 및 입력창 초기화
@@ -32,9 +31,7 @@ async function sendMessage(bottonMessage=null) {
 
     conversationHistory.push({ role: "user", parts: [{ text: message }] });
 
-    if (!buttonMessage) { 
-        userInput.value = '';
-    }
+    userInput.value = '';
 
     // 로딩 표시기 활성화
     loadingIndicator.style.display = 'block';
@@ -97,7 +94,7 @@ userInput.addEventListener('keypress', (event) => {
 messageButtons.forEach(button => {
     button.addEventListener('click', () => {
         // 버튼의 텍스트를 인자로 넘겨 sendMessage 호출
-        sendMessage(button.textContent);
+        sendMessage(button.textContent.trim());
     });
 });
 
