@@ -36,16 +36,22 @@ async function initializeAcademicData() {
             return;
         }
 
+        const contents = chunks.map(text => ({ 
+            role: "user", 
+            parts: [{ text: text }] 
+        }));
+
+
 
         const embeddingResponse = await ai.models.embedContent({
                 //model: "text-embedding-004",
-                contents: chunks,
+                contents: contents,
                 //requests: chunks.map(text => ({ content: text }))
         });
 
         academicEmbeddings = embeddingResponse.embeddings.map((vector, index) => ({
             text: chunks[index],
-            embedding: vector
+            embedding: vector.values
         }));
 
         console.log("학사 정보 임베딩이 완료되었습니다.");
@@ -80,7 +86,7 @@ app.post('/api/chat', async (req, res) => {
         // 1. 사용자 질문 임베딩 생성
         const questionContents = [{ role: "user", parts: [{ text: message }] }];
         const questionEmbeddingResponse = await ai.models.embedContent({
-            //model: "text-embedding-004",
+            model: "text-embedding-001",
             contents: questionContents, 
         });
         if (!questionEmbeddingResponse.embedding || !questionEmbeddingResponse.embedding.values || questionEmbeddingResponse.embedding.values.length === 0) {
@@ -123,7 +129,7 @@ app.post('/api/chat', async (req, res) => {
             config: {
                 systemInstruction: systemInstruction,
             },
-            contents: contents // 👈 history와 현재 질문이 포함된 최종 배열
+            contents: contents 
         });
 
         // 챗봇 응답에서 텍스트 추출
