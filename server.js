@@ -28,18 +28,16 @@ async function initializeAcademicData() {
 
         console.log(`총 ${chunks.length}개의 청크를 임베딩합니다...`);
 
-        const embeddingPromises = chunks.map(async (text) => {
-            const response = await ai.models.embedContent({
+        const embeddingPromises = await ai.models.embedContent({
                 model: "text-embedding-004",
-                content: text,
-            });
-            return {
-                text: text,
-                embedding: response.embedding.values
-            };
+                requests: chunks.map(text => ({ input: text }))
         });
 
-        academicEmbeddings = await Promise.all(embeddingPromises);
+        academicEmbeddings = embeddingPromises.embeddings.map((embeddingObj, index) => ({
+            text: chunks[index],
+            embedding: embeddingObj.values
+        }));
+        
         console.log("학사 정보 임베딩이 완료되었습니다.");
     } catch (error) {
         console.error("학사 정보 임베딩 중 오류 발생:", error);
