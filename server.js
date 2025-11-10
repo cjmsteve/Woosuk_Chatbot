@@ -31,11 +31,10 @@ async function initializeAcademicData() {
 
         console.log(`총 ${chunks.length}개의 청크를 임베딩합니다...`);
 
-        const embeddingRequests = chunks.map(text => ({ content: text }));
 
         const embeddingResponse = await ai.models.embedContent({
                 model: "text-embedding-004",
-                contents: embeddingRequests
+                contents: chunks
                 //requests: chunks.map(text => ({ content: text }))
         });
 
