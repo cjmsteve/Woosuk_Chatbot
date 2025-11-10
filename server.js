@@ -149,6 +149,12 @@ app.post('/api/chat', async (req, res) => {
 
     } catch (error) {
         console.error("❌ Gemini API 호출 중 오류 발생:", error);
+        if (error.status) {
+        console.error("HTTP 상태 코드:", error.status); // 401, 403, 500 등
+    }
+    if (error.message) {
+        console.error("에러 메시지:", error.message); // API가 보낸 구체적인 오류 설명
+    }
         res.status(500).json({ error: "서버에서 오류가 발생했습니다." });
     }
 });
