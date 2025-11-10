@@ -78,7 +78,7 @@ app.post('/api/chat', async (req, res) => {
         // 1. 사용자 질문 임베딩 생성
         const questionEmbeddingResponse = await ai.models.embedContent({
             model: "text-embedding-004",
-            contents: [{ content: message }], 
+            contents: [message], 
         });
         const questionVector = questionEmbeddingResponse.embedding.values[0]; // 첫 번째 (유일한) 벡터를 가져옴
 
