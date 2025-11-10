@@ -43,13 +43,13 @@ async function initializeAcademicData() {
 
 
         const embeddingResponse = await ai.models.embedContent({
-            model: "gemini-embedding-001",
+            model: "embedding-001",
             contents: contents,
         });
 
-        academicEmbeddings = embeddingResponse.embeddings.map((vector, index) => ({
+        academicEmbeddings = embeddingResponse.embeddings.map((embeddingItem, index) => ({
             text: chunks[index],
-            embedding: vector.values
+            embedding: embeddingItem.values
         }));
 
         console.log("학사 정보 임베딩이 완료되었습니다.");
@@ -84,7 +84,7 @@ app.post('/api/chat', async (req, res) => {
         // 1. 사용자 질문 임베딩 생성
         const questionContents = [{ role: "user", parts: [{ text: message }] }];
         const questionEmbeddingResponse = await ai.models.embedContent({
-            model: "gemini-embedding-001",
+            model: "embedding-001",
             contents: questionContents, 
         });
 
