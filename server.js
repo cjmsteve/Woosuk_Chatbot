@@ -75,11 +75,17 @@ app.post('/api/chat', async (req, res) => {
     }
 
     try {
+
         // 1. 사용자 질문 임베딩 생성
+        const questionContents = [{ role: "user", parts: [{ text: message }] }];
         const questionEmbeddingResponse = await ai.models.embedContent({
             model: "text-embedding-004",
-            contents: [message], 
+            contents: questionContents, 
         });
+        if (!questionEmbeddingResponse.embedding || !questionEmbeddingResponse.embedding.values || questionEmbeddingResponse.embedding.values.length === 0) {
+            throw new Error("질문 임베딩 생성에 실패했습니다.");
+        }
+
         const questionVector = questionEmbeddingResponse.embedding.values[0]; // 첫 번째 (유일한) 벡터를 가져옴
 
         // 2. 가장 관련 있는 문서 청크 검색 
