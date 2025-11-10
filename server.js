@@ -24,13 +24,13 @@ async function initializeAcademicData() {
         const dataPath = path.join(__dirname, 'data', 'academics.txt');
         const fileCotent = fs.readFileSync(dataPath, 'utf-8');
 
-        const chunks = fileCotent.split('---').map(cors.trim()).filter(c => c.length > 0 && !c.startsWith('문서'));
+        const chunks = fileCotent.split('---').map(c => c.trim()).filter(c => c.length > 0 && !c.startsWith('문서'));
 
         console.log(`총 ${chunks.length}개의 청크를 임베딩합니다...`);
 
         const embeddingPromises = chunks.map(async (text) => {
             const response = await ai.embeddings.createEmbedding({
-                model: "gemini-2.5-flash-embedding",
+                model: "text-embedding-004",
                 input: text,
             });
             return {
