@@ -37,7 +37,7 @@ async function initializeAcademicData() {
                 //requests: chunks.map(text => ({ content: text }))
         });
 
-        academicEmbeddings = embeddingResponse.embeddings.map((embeddingObj, index) => ({
+        academicEmbeddings = embeddingResponse.embeddings.map((vector, index) => ({
             text: chunks[index],
             embedding: vector
         }));
