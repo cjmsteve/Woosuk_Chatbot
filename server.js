@@ -21,21 +21,25 @@ function dotProduct(vecA, vecB) {
 async function initializeAcademicData() {
     try {
         console.log("학사 정보 임베딩을 시작합니다...");
+
         const dataPath = path.join(__dirname, 'data', 'academics.txt');
         const fileCotent = fs.readFileSync(dataPath, 'utf-8');
 
-        const chunks = fileCotent.split('---').map(c => c.trim()).filter(c => c.length > 0 && !c.startsWith('문서'));
+        const chunks = fileCotent.split('---')
+        .map(c => c.trim())
+        .filter(c => c.length > 0 && !c.startsWith('문서'));
 
         console.log(`총 ${chunks.length}개의 청크를 임베딩합니다...`);
 
-        const embeddingResponse = await ai.models.batchEmbedContents({
+        const embeddingResponse = await ai.models.embedContent({
                 model: "text-embedding-004",
-                requests: chunks.map(text => ({ content: text }))
+                contents: contents
+                //requests: chunks.map(text => ({ content: text }))
         });
 
         academicEmbeddings = embeddingResponse.embeddings.map((embeddingObj, index) => ({
             text: chunks[index],
-            embedding: embeddingObj.values
+            embedding: vector
         }));
 
         console.log("학사 정보 임베딩이 완료되었습니다.");
