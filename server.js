@@ -29,9 +29,9 @@ async function initializeAcademicData() {
         console.log(`총 ${chunks.length}개의 청크를 임베딩합니다...`);
 
         const embeddingPromises = chunks.map(async (text) => {
-            const response = await ai.embeddings.createEmbedding({
+            const response = await ai.models.embedContent({
                 model: "text-embedding-004",
-                input: text,
+                content: text,
             });
             return {
                 text: text,
