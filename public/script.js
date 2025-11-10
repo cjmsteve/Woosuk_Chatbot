@@ -20,7 +20,7 @@ function displayMessage(content, sender) {
 }
 
 // 메시지를 전송하는 비동기 함수 (수정 없음 - 버튼/입력 모두 처리)
-async function sendMessage(messageToSend) {
+async function sendMessage(bottonMessage=null) {
     // 1. 사용자 입력 가져오기
     const message = userInput.value.trim();
     if (message === '') return; // 빈 메시지는 전송하지 않음
@@ -28,9 +28,13 @@ async function sendMessage(messageToSend) {
     // 2. 사용자 메시지 표시 및 입력창 초기화
     displayMessage(message, 'user');
 
+    const historyToSend = [...conversationHistory];
+
     conversationHistory.push({ role: "user", parts: [{ text: message }] });
 
-    userInput.value = '';
+    if (!buttonMessage) { 
+        userInput.value = '';
+    }
 
     // 로딩 표시기 활성화
     loadingIndicator.style.display = 'block';
@@ -44,7 +48,11 @@ async function sendMessage(messageToSend) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: message, history: conversationHistory.splice(0, -1)}),
+
+            body: JSON.stringify({ 
+                message: message, 
+                history: historyToSend
+            }),
         });
 
         // 4. 응답 처리
