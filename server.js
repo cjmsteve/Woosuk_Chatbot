@@ -83,10 +83,22 @@ app.post('/api/chat', async (req, res) => {
 
         // 1. 사용자 질문 임베딩 생성
         const questionContents = [{ role: "user", parts: [{ text: message }] }];
+        
+        // 로그
+        console.log("--- 디버깅 시작 ---");
+        console.log(`사용자 메시지: ${message}`);
+        console.log("전송할 contents 형식:", JSON.stringify(questionContents));
+        console.log(`API 키 존재 여부: ${!!process.env.GEMINI_API_KEY}`); 
+        console.log(`임베딩 모델: embedding-001`);
+
         const questionEmbeddingResponse = await ai.models.embedContent({
             model: "embedding-001",
             contents: questionContents, 
         });
+
+        // 로그
+        console.log("임베딩 응답: 성공");
+        console.log("--- 디버깅 종료 ---");
 
         if (!questionEmbeddingResponse.embedding || questionEmbeddingResponse.embedding.length === 0) {
             throw new Error("질문 임베딩 생성에 실패했습니다.");
