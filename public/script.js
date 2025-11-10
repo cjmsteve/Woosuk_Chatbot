@@ -20,7 +20,7 @@ function displayMessage(content, sender) {
 // 메시지를 전송하는 비동기 함수 (수정 없음 - 버튼/입력 모두 처리)
 async function sendMessage(messageToSend) {
     // 1. messageToSend 인자가 있는지 확인
-    const message = messageToSend ? messageToSend.() : userInput.value.();
+    const message = messageToSend ? messageToSend.trim() : userInput.value.trim();
 
     if (message === '') return; // 빈 메시지는 전송하지 않음
 
