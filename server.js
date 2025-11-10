@@ -100,12 +100,12 @@ app.post('/api/chat', async (req, res) => {
         console.log("임베딩 응답: 성공");
         console.log("--- 디버깅 종료 ---");
 
-        if (!questionEmbeddingResponse.embedding || questionEmbeddingResponse.embedding.length === 0) {
+        if (!questionEmbeddingResponse.embeddings || questionEmbeddingResponse.embeddings.length === 0) {
+            console.error("api 내용", questionEmbeddingResponse);
             throw new Error("질문 임베딩 생성에 실패했습니다.");
         }
 
-        const questionVector = questionEmbeddingResponse.embedding[0].values; // 첫 번째 (유일한) 벡터를 가져옴
-
+        const questionVector = questionEmbeddingResponse.embeddings[0].values; // 첫 번째 (유일한) 벡터를 가져옴
         // 2. 가장 관련 있는 문서 청크 검색 
         const similarities = academicEmbeddings.map(doc => ({
             text: doc.text, 
