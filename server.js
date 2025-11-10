@@ -44,9 +44,8 @@ async function initializeAcademicData() {
 
 
         const embeddingResponse = await ai.models.embedContent({
-                //model: "text-embedding-004",
-                contents: contents,
-                //requests: chunks.map(text => ({ content: text }))
+            model: "gemini-embedding-001",
+            contents: contents,
         });
 
         academicEmbeddings = embeddingResponse.embeddings.map((vector, index) => ({
@@ -86,7 +85,7 @@ app.post('/api/chat', async (req, res) => {
         // 1. 사용자 질문 임베딩 생성
         const questionContents = [{ role: "user", parts: [{ text: message }] }];
         const questionEmbeddingResponse = await ai.models.embedContent({
-            model: "text-embedding-001",
+            model: "gemini-embedding-001",
             contents: questionContents, 
         });
         if (!questionEmbeddingResponse.embedding || !questionEmbeddingResponse.embedding.values || questionEmbeddingResponse.embedding.values.length === 0) {
