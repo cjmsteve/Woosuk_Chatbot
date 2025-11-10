@@ -88,7 +88,7 @@ app.post('/api/chat', async (req, res) => {
             model: "gemini-embedding-001",
             contents: questionContents, 
         });
-        if (!questionEmbeddingResponse.embedding || !questionEmbeddingResponse.embedding.values || questionEmbeddingResponse.embedding.values.length === 0) {
+        if (!questionEmbeddingResponse.embedding || questionEmbeddingResponse.embedding.length === 0) {
             throw new Error("질문 임베딩 생성에 실패했습니다.");
         }
 
